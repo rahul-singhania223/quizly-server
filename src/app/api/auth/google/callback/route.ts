@@ -1,10 +1,11 @@
-import { handleApiError } from "@/lib/handleApiError";
+import { cookies } from "next/headers";
+import jwt from "jsonwebtoken";
 import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";
-import jwt from "jsonwebtoken";
+
+import { handleApiError } from "@/lib/handleApiError";
 import { db } from "@/lib/db";
 import { redis } from "@/lib/redis";
-import { cookies } from "next/headers";
 
 export async function GET(req: NextRequest) {
   try {

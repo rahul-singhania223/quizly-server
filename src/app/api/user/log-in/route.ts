@@ -8,7 +8,7 @@ import { handleApiError } from "@/lib/handleApiError";
 import { redis } from "@/lib/redis";
 import { sendMail } from "@/lib/send-mail";
 
-export async function OPTIONS() {
+export async function OPTIONS(req: Request) {
   return NextResponse.json({}, { status: 200 });
 }
 

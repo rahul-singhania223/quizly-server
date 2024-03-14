@@ -3,10 +3,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { authUser } from "@/lib/auth-user";
 import { handleApiError } from "@/lib/handleApiError";
 
-export function OPTIONS(req: Request) {
-  return NextResponse.json({}, { status: 200 });
-}
-
 export async function GET(req: NextRequest) {
   try {
     const user = await authUser();

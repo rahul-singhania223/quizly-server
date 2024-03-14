@@ -1,8 +1,9 @@
+import { NextRequest, NextResponse } from "next/server";
+
 import { authUser } from "@/lib/auth-user";
 import { db } from "@/lib/db";
 import { handleApiError } from "@/lib/handleApiError";
 import { redis } from "@/lib/redis";
-import { NextRequest, NextResponse } from "next/server";
 
 export async function OPTIONS(req: Request) {
   return NextResponse.json({}, { status: 200 });

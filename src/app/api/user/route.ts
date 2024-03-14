@@ -1,9 +1,14 @@
+import { NextResponse } from "next/server";
+import { User } from "@prisma/client";
+
 import { authUser } from "@/lib/auth-user";
 import { db } from "@/lib/db";
 import { handleApiError } from "@/lib/handleApiError";
 import { redis } from "@/lib/redis";
-import { User } from "@prisma/client";
-import { NextResponse } from "next/server";
+
+export async function OPTIONS(req: Request) {
+  return NextResponse.json({}, { status: 200 });
+}
 
 export async function GET(req: Request) {
   try {

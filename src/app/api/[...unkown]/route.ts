@@ -1,5 +1,6 @@
-import { handleApiError } from "@/lib/handleApiError";
 import { NextResponse } from "next/server";
+
+import { handleApiError } from "@/lib/handleApiError";
 
 export async function OPTIONS(req: Request) {
   return NextResponse.json({}, { status: 200 });

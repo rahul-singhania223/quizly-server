@@ -1,11 +1,12 @@
+import { NextRequest, NextResponse } from "next/server";
+import { Saved } from "@prisma/client";
+
 import { authUser } from "@/lib/auth-user";
 import { db } from "@/lib/db";
 import { handleApiError } from "@/lib/handleApiError";
 import { redis } from "@/lib/redis";
-import { Saved, User } from "@prisma/client";
-import { NextRequest, NextResponse } from "next/server";
 
-export async function OPTION(req: Request) {
+export async function OPTIONS(req: Request) {
   return NextResponse.json({}, { status: 200 });
 }
 

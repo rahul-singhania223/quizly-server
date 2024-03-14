@@ -1,10 +1,14 @@
 import { cookies } from "next/headers";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import { NextResponse } from "next/server";
 
 import { handleApiError } from "@/lib/handleApiError";
 import { db } from "@/lib/db";
-import { NextResponse } from "next/server";
+
+export async function OPTIONS(req: Request) {
+  return NextResponse.json({}, { status: 200 });
+}
 
 export async function POST(req: Request) {
   try {

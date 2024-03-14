@@ -7,7 +7,7 @@ import { handleApiError } from "@/lib/handleApiError";
 import { generateOTP } from "@/lib/generate-otp";
 import { sendMail } from "@/lib/send-mail";
 
-export async function OPTIONS() {
+export async function OPTIONS(req: Request) {
   return NextResponse.json({}, { status: 200 });
 }
 

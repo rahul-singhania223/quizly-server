@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import jwt, { JwtPayload } from "jsonwebtoken";
+import { cookies } from "next/headers";
 
 import { handleApiError } from "@/lib/handleApiError";
 import { generateOTP } from "@/lib/generate-otp";
 import { sendMail } from "@/lib/send-mail";
-import { cookies } from "next/headers";
 
 export async function GET(req: NextRequest) {
   try {

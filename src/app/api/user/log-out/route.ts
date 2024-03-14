@@ -1,9 +1,9 @@
 import { cookies } from "next/headers";
 import jwt, { JwtPayload } from "jsonwebtoken";
+import { NextResponse } from "next/server";
 
 import { handleApiError } from "@/lib/handleApiError";
 import { redis } from "@/lib/redis";
-import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
   try {
