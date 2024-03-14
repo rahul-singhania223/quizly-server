@@ -1,0 +1,147 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model User {
+  id              String     @id @default(uuid())
+  name            String
+  email           String?    @unique
+  google_email    String?    @unique
+  google_id       String?    @unique
+  password        String?
+  followers_count Int        @default(0)
+  following_count Int        @default(0)
+  saved_count     Int        @default(0)
+  bio             String?
+  image_url       String?
+  is_private      Boolean    @default(false)
+  refresh_token   String?    @db.Text
+  quizes          Quiz[]     @relation("quizAuthor")
+  saved_quizes    Saved[]    @relation("savedToUser")
+  following       Follower[] @relation("followers")
+  isAdmin         Boolean    @default(false)
+  is_author       Boolean    @default(false)
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+}
+
+model Follower {
+  id        String   @id @default(uuid())
+  users     User[]   @relation("followers")
+  user_id   String
+  author_id String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Quiz {
+  id            String     @id @default(uuid())
+  title         String
+  thumbnail     String
+  description   String     @db.Text
+  questions     Question[]
+  questionCount Int        @default(0)
+  likes_count   Int        @default(0)
+  plays_count   Int        @default(0)
+  likes         Like[]     @relation("likes")
+  plays         Play[]     @relation("play")
+  toppers       Topper[]
+  author        User       @relation("quizAuthor", fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  savedBy       Saved[]    @relation("savedQuizes")
+  history       History[]  @relation("quizHistory")
+
+  user_id   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([user_id])
+}
+
+model Question {
+  id        String @id @default(uuid())
+  title     String
+  options   String
+  answer    String
+  exams     String
+  author_id String
+
+  Quiz      Quiz?    @relation(fields: [quiz_id], references: [id])
+  quiz_id   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([quiz_id])
+}
+
+model Topper {
+  id        String @id @default(uuid())
+  name      String
+  image_url String
+  points    Int
+  rank      Int
+
+  Quiz      Quiz?    @relation(fields: [quiz_id], references: [id])
+  quiz_id   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([quiz_id])
+}
+
+model Like {
+  id      String @id @default(uuid())
+  quiz    Quiz   @relation("likes", fields: [quiz_id], references: [id])
+  user_id String
+
+  quiz_id   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([quiz_id])
+}
+
+model Play {
+  id      String @id @default(uuid())
+  quiz    Quiz   @relation("play", fields: [quiz_id], references: [id])
+  user_id String
+
+  quiz_id   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([quiz_id])
+}
+
+model History {
+  id         String   @id @default(uuid())
+  points     Int      @default(0)
+  rank       Int?
+  time_spent Int?     @default(0)
+  quiz       Quiz     @relation("quizHistory", fields: [quiz_id], references: [id], onDelete: Cascade)
+  user_id    String
+  quiz_id    String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([quiz_id])
+}
+
+model Saved {
+  id      String @id @default(uuid())
+  quiz    Quiz   @relation("savedQuizes", fields: [quiz_id], references: [id])
+  user    User   @relation("savedToUser", fields: [user_id], references: [id])
+  user_id String
+  quiz_id String
+
+  @@index([user_id])
+  @@index([quiz_id])
+}

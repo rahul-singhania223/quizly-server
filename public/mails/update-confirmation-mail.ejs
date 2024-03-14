@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Email Confirmation</title>
+  </head>
+  <body style="font-family: Arial, sans-serif">
+    <h2>Profile Update Confirmation</h2>
+
+    <p>Hello <%= fullName %>,</p>
+
+    <p>
+      To confirm the update of your profile, please use the following OTP
+      (One-Time Password):
+    </p>
+
+    <p style="font-size: 20px; font-weight: bold; color: #007bff"><%= otp %></p>
+
+    <p>
+      If you didn't request this update or if you have any questions, please
+      ignore this email.
+    </p>
+
+    <p>
+      <a
+        href="<%= confirmUpdateUrl  %>"
+        style="text-decoration: none; color: #007bff"
+      >
+        Confirm Update
+      </a>
+    </p>
+
+    <p>
+      Thank you,
+      <br />
+      Your App Team
+    </p>
+  </body>
+</html>

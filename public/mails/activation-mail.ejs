@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OTP Verification</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        text-align: center;
+      }
+
+      .email-container {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      h1,
+      h3 {
+        color: #333;
+      }
+
+      p {
+        color: #555;
+      }
+
+      .otp-placeholder {
+        font-size: 24px;
+        color: #4caf50;
+        font-weight: bold;
+        margin-top: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="email-container">
+      <h3>Hello, <%= name %></h3>
+      <h1>Welcome to quizly!</h1>
+      <p>Thank you for choosing us. We're excited to have you on board.</p>
+
+      <p>Your One-Time Password (OTP) for verification is:</p>
+      <div class="otp-placeholder"><%= otp %></div>
+
+      <p>Please use this OTP to complete the registration process.</p>
+      <p>This OTP is only valid for 5 minutes</p>
+    </div>
+  </body>
+</html>
