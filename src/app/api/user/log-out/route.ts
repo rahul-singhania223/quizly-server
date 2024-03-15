@@ -29,7 +29,7 @@ export async function GET(req: Request) {
       sameSite: "none",
       path: "/",
     });
-    cookies().delete("refresh_token", "", {
+    cookies().set("refresh_token", "", {
       expires: new Date(0),
       maxAge: 0,
       secure: process.env.NODE_ENV === "production",
