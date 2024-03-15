@@ -88,6 +88,7 @@ export async function POST(req: Request) {
         subject: "Login Successfull on quizly",
         template: "login-success-mail",
         data: { name: user.name },
+
         email: user.email,
       });
     } catch (error) {
@@ -96,16 +97,18 @@ export async function POST(req: Request) {
 
     cookies().set("access_token", access_token, {
       expires: new Date(Date.now() + 1000 * 60 * 60 * 3),
+      maxAge: 1000 * 60 * 60 * 3,
       secure: process.env.NODE_ENV === "production",
-      domain: ".vercel.app",
+      domain: "https://quizly-raone.vercel.app",
       sameSite: "none",
       path: "/",
     });
 
     cookies().set("refresh_token", refresh_token, {
       expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
+      maxAge: 1000 * 60 * 60 * 24 * 7,
       secure: process.env.NODE_ENV === "production",
-      domain: ".vercel.app",
+      domain: "https://quizly-raone.vercel.app",
       sameSite: "none",
       path: "/",
     });
