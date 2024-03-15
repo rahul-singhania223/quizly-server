@@ -99,7 +99,7 @@ export async function POST(req: Request) {
       secure: process.env.NODE_ENV === "production",
       domain: "quizly-raone.vercel.app",
       sameSite: "none",
-      httpOnly: true,
+      path: "/",
     });
 
     cookies().set("refresh_token", refresh_token, {
@@ -107,7 +107,7 @@ export async function POST(req: Request) {
       secure: process.env.NODE_ENV === "production",
       domain: "quizly-raone.vercel.app",
       sameSite: "none",
-      httpOnly: true,
+      path: "/",
     });
 
     return NextResponse.json(newUser);
