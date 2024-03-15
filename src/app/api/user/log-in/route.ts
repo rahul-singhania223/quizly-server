@@ -98,14 +98,12 @@ export async function POST(req: Request) {
       expires: new Date(Date.now() + 1000 * 60 * 60 * 3),
       secure: process.env.NODE_ENV === "production",
       domain: process.env.CLIENT_URL as string,
-      httpOnly: true,
     });
 
     cookies().set("refresh_token", refresh_token, {
       expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
       secure: process.env.NODE_ENV === "production",
       domain: process.env.CLIENT_URL as string,
-      httpOnly: true,
     });
 
     return NextResponse.json(newUser);
