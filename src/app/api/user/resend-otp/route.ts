@@ -46,8 +46,10 @@ export async function GET(req: NextRequest) {
     );
 
     cookies().set("activation_token", activation_token, {
-      httpOnly: true,
       secure: process.env.NODE_ENV === "production",
+      domain: process.env.DOMAIN as string,
+      sameSite: "none",
+      path: "/",
       expires: new Date(Date.now() + 1000 * 60 * 5), // 5 minutes after generation
     });
 

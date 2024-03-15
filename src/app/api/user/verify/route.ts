@@ -145,15 +145,19 @@ export async function POST(req: NextRequest) {
       cookies().set("access_token", access_token, {
         expires: new Date(Date.now() + 1000 * 60 * 60 * 3),
         httpOnly: true,
-        domain: process.env.CLIENT_URL as string,
+        domain: process.env.DOMAIN as string,
         secure: process.env.NODE_ENV === "production",
+        sameSite: "none",
+        maxAge: 1000 * 60 * 60 * 24 * 7,
       });
 
       cookies().set("refresh_token", refresh_token, {
         expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
         httpOnly: true,
-        domain: process.env.CLIENT_URL as string,
+        domain: process.env.DOMAIN as string,
         secure: process.env.NODE_ENV === "production",
+        path: "/",
+        maxAge: 1000 * 60 * 60 * 24 * 7,
       });
 
       return NextResponse.json(newUser);

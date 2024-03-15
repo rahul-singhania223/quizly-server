@@ -60,9 +60,10 @@ export async function POST(req: Request, res: Response) {
     );
 
     cookies().set("activation_token", activation_token, {
-      httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      domain: process.env.CLIENT_URL as string,
+      domain: process.env.DOMAIN as string,
+      sameSite: "none",
+      path: "/",
       expires: new Date(Date.now() + 1000 * 60 * 5), // 5 minutes after generation
     });
 

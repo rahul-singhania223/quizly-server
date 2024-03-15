@@ -99,7 +99,7 @@ export async function POST(req: Request) {
       expires: new Date(Date.now() + 1000 * 60 * 60 * 3),
       maxAge: 1000 * 60 * 60 * 3,
       secure: process.env.NODE_ENV === "production",
-      domain: "quizly-server-raone.vercel.app",
+      domain: process.env.DOMAIN as string,
       sameSite: "none",
       path: "/",
     });
@@ -108,7 +108,7 @@ export async function POST(req: Request) {
       expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
       maxAge: 1000 * 60 * 60 * 24 * 7,
       secure: process.env.NODE_ENV === "production",
-      domain: "quizly-server-raone.vercel.app",
+      domain: process.env.DOMAIN as string,
       sameSite: "none",
       path: "/",
     });

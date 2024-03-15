@@ -54,8 +54,9 @@ export async function POST(req: Request) {
     cookies().set("cp_token", forgot_password_token, {
       expires: new Date(Date.now() + 1000 * 60 * 5),
       secure: process.env.NODE_ENV === "production",
-      domain: process.env.CLIENT_URL as string,
-      httpOnly: true,
+      domain: process.env.DOMAIN as string,
+      sameSite: "none",
+      path: "/",
     });
 
     return NextResponse.json({}, { status: 200 });
