@@ -95,9 +95,9 @@ export async function POST(req: Request) {
     }
 
     cookies().set("access_token", access_token, {
-      expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
+      expires: new Date(Date.now() + 1000 * 60 * 60 * 3),
       secure: process.env.NODE_ENV === "production",
-      domain: "quizly-raone.vercel.app",
+      domain: ".vercel.app",
       sameSite: "none",
       path: "/",
     });
@@ -105,7 +105,7 @@ export async function POST(req: Request) {
     cookies().set("refresh_token", refresh_token, {
       expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
       secure: process.env.NODE_ENV === "production",
-      domain: "quizly-raone.vercel.app",
+      domain: ".vercel.app",
       sameSite: "none",
       path: "/",
     });
