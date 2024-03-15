@@ -1,6 +1,5 @@
 import { createTransport, Transporter } from "nodemailer";
 import ejs from "ejs";
-import path from "path";
 
 interface MailOptions {
   email: string;
@@ -21,10 +20,10 @@ export const sendMail = async (options: MailOptions) => {
 
     const { email, subject, template, data } = options;
 
-    const html = await ejs.renderFile(
+    const html = (await ejs.renderFile(
       process.cwd() + `/public/mails/${template}.ejs`,
       data
-    );
+    )) as any;
 
     const mailOptions = {
       from: process.env.SMTP_MAIL as string,
@@ -33,8 +32,16 @@ export const sendMail = async (options: MailOptions) => {
       html,
     };
 
-    // @ts-ignore
-    await tranporter.sendMail(mailOptions);
+    await new Promise((resolve, reject) => {
+      tranporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.log(error);
+          reject(error);
+        } else {
+          resolve(info);
+        }
+      });
+    });
   } catch (error: any) {
     console.log("[Couldn't send OTP mail]", error);
   }

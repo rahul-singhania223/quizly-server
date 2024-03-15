@@ -64,6 +64,7 @@ export async function POST(req: Request, res: Response) {
       domain: process.env.DOMAIN as string,
       sameSite: "none",
       path: "/",
+      maxAge: 1000 * 60 * 5,
       expires: new Date(Date.now() + 1000 * 60 * 5), // 5 minutes after generation
     });
 
