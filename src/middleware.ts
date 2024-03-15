@@ -4,10 +4,11 @@ export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
 
   res.headers.append("Access-Control-Allow-Credentials", "true");
-  res.headers.append(
-    "Access-Control-Allow-Origin",
-    process.env.ALLOWED_ORIGIN || ""
-  );
+  // res.headers.append(
+  //   "Access-Control-Allow-Origin",
+  //   process.env.ALLOWED_ORIGIN || ""
+  // );
+  res.headers.append("Access-Control-Allow-Origin", "http://localhost:3001");
   res.headers.append(
     "Access-Control-Allow-Methods",
     "GET,DELETE,PATCH,POST,PUT,OPTIONS"
