@@ -22,7 +22,7 @@ export async function GET(req: Request) {
     await redis.del(decoded.id);
 
     cookies().set("access_token", "", {
-      expires: new Date(0),
+      expires: new Date(Date.now()),
       maxAge: 0,
       secure: process.env.NODE_ENV === "production",
       domain: process.env.DOMAIN as string,
@@ -30,7 +30,7 @@ export async function GET(req: Request) {
       path: "/",
     });
     cookies().set("refresh_token", "", {
-      expires: new Date(0),
+      expires: new Date(Date.now()),
       maxAge: 0,
       secure: process.env.NODE_ENV === "production",
       domain: process.env.DOMAIN as string,
