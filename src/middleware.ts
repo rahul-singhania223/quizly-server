@@ -8,7 +8,6 @@ export async function middleware(req: NextRequest) {
     "Access-Control-Allow-Origin",
     process.env.ALLOWED_ORIGIN || ""
   );
-  // res.headers.append("Access-Control-Allow-Origin", "http://localhost:3001");
   res.headers.append(
     "Access-Control-Allow-Methods",
     "GET,DELETE,PATCH,POST,PUT,OPTIONS"

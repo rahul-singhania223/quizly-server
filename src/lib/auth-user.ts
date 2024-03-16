@@ -56,38 +56,42 @@ export const authUser = async () => {
           data: {
             refresh_token: refresh_token,
           },
-          select: {
-            id: true,
-            name: true,
-            email: true,
-            bio: true,
-            image_url: true,
-            is_private: true,
-            isAdmin: true,
-            followers_count: true,
-            following_count: true,
-            saved_count: true,
-            refresh_token: false,
-            password: false,
+          include: {
             saved_quizes: true,
             following: true,
           },
         });
 
-        await redis.set(user.id, JSON.stringify(newUser));
+        await redis.set(
+          user.id,
+          JSON.stringify({
+            ...newUser,
+            refresh_token: undefined,
+            password: undefined,
+          })
+        );
 
         cookies().set("access_token", access_token, {
           expires: new Date(Date.now() + 1000 * 60 * 60 * 3),
+          secure: process.env.NODE_ENV === "production",
+          httpOnly: true,
+          // sameSite: "none",
+          // domain: process.env.DOMAIN
         });
 
         cookies().set("refresh_token", refresh_token, {
           expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
+          secure: process.env.NODE_ENV === "production",
+          httpOnly: true,
+          // sameSite: "none",
+          // domain: process.env.DOMAIN
         });
 
         return { ...newUser, password: undefined, refresh_token: undefined };
       }
     }
 
+    // IF USER HAS ACCESS TOKEN
     if (access_token) {
       const decoded = jwt.verify(
         access_token,
@@ -102,19 +106,7 @@ export const authUser = async () => {
         where: {
           id: decoded.id,
         },
-        select: {
-          id: true,
-          name: true,
-          email: true,
-          bio: true,
-          image_url: true,
-          is_private: true,
-          followers_count: true,
-          following_count: true,
-          saved_count: true,
-          refresh_token: false,
-          password: false,
-          isAdmin: true,
+        include: {
           saved_quizes: true,
           following: true,
         },
@@ -123,7 +115,14 @@ export const authUser = async () => {
       if (!dbUser) return null;
 
       // save in cache
-      await redis.set(dbUser.id, JSON.stringify(dbUser));
+      await redis.set(
+        dbUser.id,
+        JSON.stringify({
+          ...dbUser,
+          refresh_token: undefined,
+          password: undefined,
+        })
+      );
 
       return dbUser;
     }

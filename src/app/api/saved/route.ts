@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { Saved } from "@prisma/client";
+import { Saved, User } from "@prisma/client";
 
 import { authUser } from "@/lib/auth-user";
 import { db } from "@/lib/db";
@@ -48,12 +48,11 @@ export async function POST(req: NextRequest) {
 
     const allSavedQuizes = [...user.saved_quizes, saved];
 
-    await redis.set(
-      user.id,
-      JSON.stringify({ ...user, saved_quizes: allSavedQuizes })
-    );
+    const updatedUser = { ...user, saved_quizes: allSavedQuizes };
 
-    return NextResponse.json(saved);
+    await redis.set(user.id, JSON.stringify(updatedUser));
+
+    return NextResponse.json(updatedUser);
   } catch (error: any) {
     console.log("[SAVED_POST]", error);
     return handleApiError("Something went wrong", 500);
@@ -108,12 +107,11 @@ export async function PATCH(req: NextRequest) {
       (saved: Saved) => saved.quiz_id !== quizId
     );
 
-    await redis.set(
-      user.id,
-      JSON.stringify({ ...user, saved_quizes: remainingSavedQuizes })
-    );
+    const updatedUser = { ...user, saved_quizes: remainingSavedQuizes };
 
-    return NextResponse.json({ message: "Unsaved one quiz" }, { status: 200 });
+    await redis.set(user.id, JSON.stringify(updatedUser));
+
+    return NextResponse.json(updatedUser);
   } catch (error: any) {
     console.log("[SAVED_POST]", error);
     return handleApiError("Something went wrong", 500);

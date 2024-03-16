@@ -21,22 +21,25 @@ export async function GET(req: Request) {
 
     await redis.del(decoded.id);
 
-    cookies().set("access_token", "", {
-      expires: new Date(Date.now()),
-      maxAge: 0,
-      secure: process.env.NODE_ENV === "production",
-      domain: process.env.DOMAIN as string,
-      sameSite: "none",
-      path: "/",
-    });
-    cookies().set("refresh_token", "", {
-      expires: new Date(Date.now()),
-      maxAge: 0,
-      secure: process.env.NODE_ENV === "production",
-      domain: process.env.DOMAIN as string,
-      sameSite: "none",
-      path: "/",
-    });
+    cookies().delete("access_token");
+    cookies().delete("refresh_token");
+
+    // cookies().set("access_token", "", {
+    //   expires: new Date(Date.now()),
+    //   maxAge: 0,
+    //   secure: process.env.NODE_ENV === "production",
+    //   domain: process.env.DOMAIN as string,
+    //   sameSite: "none",
+    //   path: "/",
+    // });
+    // cookies().set("refresh_token", "", {
+    //   expires: new Date(Date.now()),
+    //   maxAge: 0,
+    //   secure: process.env.NODE_ENV === "production",
+    //   domain: process.env.DOMAIN as string,
+    //   sameSite: "none",
+    //   path: "/",
+    // });
 
     return NextResponse.json(
       { success: true, message: "Logged out successfully", data: null },

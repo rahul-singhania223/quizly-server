@@ -12,8 +12,7 @@ export const sendMail = async (options: MailOptions) => {
   try {
     const tranporter: Transporter = createTransport({
       service: "gmail",
-      host: "smtp.gmail.com",
-      port: 465,
+
       auth: {
         user: process.env.SMTP_MAIL as string,
         pass: process.env.SMTP_PASSWORD as string,

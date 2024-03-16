@@ -68,7 +68,7 @@ model Quiz {
 
 model Question {
   id        String @id @default(uuid())
-  title     String
+  title     String @db.Text
   options   String
   answer    String
   exams     String

@@ -108,7 +108,7 @@ export async function POST(
       })
     );
 
-    return NextResponse.json({ updatedUser });
+    return NextResponse.json(updatedUser);
   } catch (error: any) {
     console.log("[FOLLOW_POST]", error);
     return handleApiError("Something went wrong", 500);
