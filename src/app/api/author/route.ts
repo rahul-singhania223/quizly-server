@@ -32,6 +32,13 @@ export async function GET(req: NextRequest) {
       where: {
         is_author: true,
       },
+      select: {
+        id: true,
+        image_url: true,
+        name: true,
+        refresh_token: false,
+        password: false,
+      },
     });
 
     return NextResponse.json(authors);
