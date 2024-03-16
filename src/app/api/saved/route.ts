@@ -46,9 +46,18 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    const allSavedQuizes = [...user.saved_quizes, saved];
-
-    const updatedUser = { ...user, saved_quizes: allSavedQuizes };
+    const updatedUser = await db.user.update({
+      where: {
+        id: user.id,
+      },
+      data: {
+        saved_count: user.saved_count + 1,
+      },
+      include: {
+        following: true,
+        saved_quizes: true,
+      },
+    });
 
     await redis.set(user.id, JSON.stringify(updatedUser));
 
@@ -103,11 +112,14 @@ export async function PATCH(req: NextRequest) {
       },
     });
 
-    const remainingSavedQuizes = user.saved_quizes.filter(
-      (saved: Saved) => saved.quiz_id !== quizId
-    );
-
-    const updatedUser = { ...user, saved_quizes: remainingSavedQuizes };
+    const updatedUser = await db.user.update({
+      where: {
+        id: user.id,
+      },
+      data: {
+        saved_count: user.saved_count - 1,
+      },
+    });
 
     await redis.set(user.id, JSON.stringify(updatedUser));
 
